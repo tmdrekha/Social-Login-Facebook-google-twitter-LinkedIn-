@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TMD Social Login</name>
+	<version>1.0</version>
+	<author>TMD(www.opencartextensions.in)</author>
+	<link>http://www.opencartextensions.in/</link>
+		
+	<file name="catalog/view/theme/*/template/account/login.tpl">
+		<operation error="log">
+			<search position="replace"><![CDATA[<input type="submit" value="<?php echo $button_login; ?>" class="button" />]]></search>
+			<add><![CDATA[
+				<input type="submit" value="<?php echo $button_login; ?>" class="button" style="float:left;"/>	
+			]]></add>
+		</operation>		
+		<operation error="log">
+			<search position="before" offset="1"><![CDATA[</form>]]></search>
+			<add><![CDATA[
+				<?php echo $column_login; ?>	
+			]]></add>
+		</operation>
+	</file>
+	
+	
+	<file name="catalog/controller/account/login.php">
+		<operation error="log">
+			<search position="after"><![CDATA['common/column_left',]]></search>
+			<add><![CDATA[
+		/* xml */
+		'common/column_login',
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+</modification>

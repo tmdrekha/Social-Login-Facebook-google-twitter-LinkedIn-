@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TMD Social Login</name>
+	<id>TMD Social Login</id>
+	<code>#TSL</code>
+	<version>3.x.x</version>
+	<author>TMD(www.opencartextensions.in)</author>
+	<link>http://www.opencartextensions.in/</link>
+		
+	<file path="catalog/view/theme/*/template/account/login.twig">
+		<operation error="log">
+			<search ><![CDATA[<div class="well">]]></search>
+			<add position="replace"><![CDATA[
+				<div class="well col-sm-12">	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[<input type="submit" value="{{ button_login }}" class="btn btn-primary" />]]></search>
+			<add position="replace"><![CDATA[
+				<input type="submit" value="{{ button_login }}" class="btn btn-primary pull-left" />	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[</form>]]></search>
+			<add position="after"><![CDATA[
+				{{ column_login }}	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[{{ footer }}]]></search>
+			<add position="before"><![CDATA[
+				<style>
+				@media(max-width:767px){
+					#column-login,.social_login,.socalicon{
+						float:none !important;
+						width:100%;
+					}
+					.account-login .btn-primary{
+						float:none !important;
+					}
+					.social_login {
+						padding:0 10px;
+					}
+				}
+				</style>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/checkout/login.twig">
+		<operation error="log">
+			<search ><![CDATA[<input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />]]></search>
+			<add position="replace"><![CDATA[
+			<input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+			{{ column_login }}
+			
+			]]></add>
+		</operation>
+		
+	</file>
+	
+	<file path="catalog/controller/checkout/login.php">
+		<operation error="log">
+			<search ><![CDATA[$data['forgotten'] = $this->url->link('account/forgotten', '', true);]]></search>
+			<add position="after"><![CDATA[
+			
+		/* xml */
+		$data['column_login'] = $this->load->controller('extension/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/checkout/checkout.php">
+		<operation error="log">
+			<search ><![CDATA[$data['forgotten'] = $this->url->link('account/forgotten', '', true);]]></search>
+			<add position="before"><![CDATA[
+			
+		/* xml */
+		$data['column_login'] = $this->load->controller('extension/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/account/login.php">
+		<operation error="log">
+			<search ><![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]></search>
+			<add position="after"><![CDATA[
+		/* xml */
+		$data['column_login'] = $this->load->controller('extension/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/view/template/design/layout_form.twig">
+		<operation error="log">
+			<search ><![CDATA[<table id="module-column-right" class="table table-striped table-bordered table-hover">]]></search>
+			<add position="before" offset="2"><![CDATA[
+				<!--xml-->
+				 <table id="module-column-login" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center">{{ text_column_loginpage }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for layout_module in layout_modules %}
+                    {% if layout_module.position == 'column_login' %}
+                    <tr id="module-row{{ module_row }}">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            {% if extension.code == layout_module.code %}
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% endif %}
+                            {% else %}
+                            {% for module in extension.module %}
+                            {% if module.code == layout_module.code %}
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                    {% set module_row = module_row + 1 %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select class="form-control input-sm">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
+                            {% if not extension.module %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
+                            {% for module in extension.module %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('column-login');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+				<!--xml-->
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').delegate('select[name*=\'code\']', 'change', function() {]]></search>
+			<add position="replace"><![CDATA[
+				$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-column-login').delegate('select[name*=\'code\']', 'change', function() {
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search ><![CDATA[$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');]]></search>
+			<add position="replace"><![CDATA[
+				$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom, #module-column-login').trigger('change');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/language/*/design/layout.php">
+		<operation error="log">
+			<search ><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+				/* xml */
+	
+			$_['text_column_loginpage']    = 'Login Page';
+			$_['text_column_checkoutpage'] = 'Checkout Page';
+				/* xml */	
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/controller/design/layout.php">
+		<operation error="log">
+			<search ><![CDATA[protected function getForm() {]]></search>
+			<add position="after"><![CDATA[
+				/* xml */
+					$data['text_column_loginpage'] = $this->language->get('text_column_loginpage');
+					$data['text_column_checkoutpage'] = $this->language->get('text_column_checkoutpage');	
+				/* xml */	
+			]]></add>
+		</operation>
+	</file>
+	
+	 
+	<file path="catalog/view/theme/journal3/template/account/register.twig">
+		<operation error="log">
+			<search ><![CDATA[</form>]]></search>
+			<add position="after"><![CDATA[
+				{{ column_login }}
+				<style>
+				@media(max-width:767px){
+					#column-login,.social_login,.socalicon{
+						float:none !important;
+						width:auto;
+					}
+					.account-login .btn-primary{
+						float:none !important;
+					}
+					.social_login {
+						padding:0 10px;
+					}
+				}
+				</style>				
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/journal3/template/account/login.twig">
+			<operation error="log">
+			<search ><![CDATA[</form>]]></search>
+			<add position="after"><![CDATA[
+				{{ column_login }}	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[{{ footer }}]]></search>
+			<add position="before"><![CDATA[
+				<style>
+				@media(max-width:767px){
+					#column-login,.social_login,.socalicon{
+						float:none !important;
+						width:auto;
+					}
+					.account-login .btn-primary{
+						float:none !important;
+					}
+					.social_login {
+						padding:0 10px;
+					}
+				}
+				</style>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/journal3/template/checkout/login.twig">
+		<operation error="log">
+			<search ><![CDATA[<button type="button" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary"><span>{{ button_continue }}</span></button>]]></search>
+			<add position="after"><![CDATA[{{ column_login }}]]></add>
+		</operation>
+		
+	</file>
+	<file path="catalog/controller/account/register.php">
+		<operation error="log">
+			<search ><![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]></search>
+			<add position="before"><![CDATA[
+			
+		/* xml */
+		$data['column_login'] = $this->load->controller('extension/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/account/login.twig">
+		<operation error="log">
+			<search ><![CDATA[<div class="well">]]></search>
+			<add position="replace"><![CDATA[
+				<div class="well col-sm-12">	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[<input type="submit" value="{{ button_login }}" class="btn btn-primary" />]]></search>
+			<add position="replace"><![CDATA[
+				<input type="submit" value="{{ button_login }}" class="btn btn-primary pull-left" />	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[</form>]]></search>
+			<add position="after"><![CDATA[
+				{{ column_login }}	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[{{ footer }}]]></search>
+			<add position="before"><![CDATA[
+				<style>
+				@media(max-width:767px){
+					#column-login,.social_login,.socalicon{
+						float:none !important;
+						width:100%;
+					}
+					.account-login .btn-primary{
+						float:none !important;
+					}
+					.social_login {
+						padding:0 10px;
+					}
+				}
+				</style>
+			]]></add>
+		</operation>
+	</file>
+</modification>

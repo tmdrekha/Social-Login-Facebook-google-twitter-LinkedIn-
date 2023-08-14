@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TMD Social Login</name>
+	<id>TMD Social Login</id>
+	<code>#TSL</code>
+	<version>2.2.x</version>
+	<author>TMD(www.opencartextensions.in)</author>
+	<link>http://www.opencartextensions.in/</link>
+		
+	<file path="catalog/view/theme/*/template/account/login.tpl">
+		<operation error="log">
+			<search ><![CDATA[<div class="well">]]></search>
+			<add position="replace"><![CDATA[
+				<div class="well col-sm-12">	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[<input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary" />]]></search>
+			<add position="replace"><![CDATA[
+				<input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary pull-left" />	
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[</form>]]></search>
+			<add position="after"><![CDATA[
+				<?php echo $column_login; ?>	
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/checkout/login.tpl">
+		<operation error="log">
+			<search ><![CDATA[<input type="button" value="<?php echo $button_login; ?>" id="button-login" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />]]></search>
+			<add position="replace"><![CDATA[
+			<input type="button" value="<?php echo $button_login; ?>" id="button-login" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+			<?php echo $column_login; ?>
+			
+			]]></add>
+		</operation>
+		
+	</file>
+	
+	<file path="catalog/controller/checkout/login.php">
+		<operation error="log">
+			<search ><![CDATA[$data['forgotten'] = $this->url->link('account/forgotten', '', true);]]></search>
+			<add position="before"><![CDATA[
+			
+		/* xml */
+		$data['column_login'] = $this->load->controller('common/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/account/login.php">
+		<operation error="log">
+			<search ><![CDATA[$data['forgotten'] = $this->url->link('account/forgotten', '', true);]]></search>
+			<add position="after"><![CDATA[
+		/* xml */
+		$data['column_login'] = $this->load->controller('common/column_login');
+		/* xml */
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/view/template/design/layout_form.tpl">
+		<operation error="log">
+			<search ><![CDATA[<?php if ($layout_module['position'] == 'content_top') { ?>]]></search>
+			<add position="before"><![CDATA[
+				<!--xml-->
+										
+					<?php if ($layout_module['position'] == 'column_login') { ?>
+                    <option value="column_login" selected="selected"><?php echo $text_column_loginpage; ?></option>
+                    <?php } else { ?>
+                    <option value="column_login"><?php echo $text_column_loginpage; ?></option>
+                    <?php } ?>
+					
+					<!--xml-->
+			]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search ><![CDATA[html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';]]></search>
+			<add position="before"><![CDATA[
+				/* xml */
+    html += '    <option value="column_loginpage"><?php echo $text_column_loginpage; ?></option>';
+  
+	/* xml */
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/language/*/design/layout.php">
+		<operation error="log">
+			<search ><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+				/* xml */
+	
+$_['text_column_loginpage']    = 'Login Page';
+$_['text_column_checkoutpage'] = 'Checkout Page';
+	/* xml */	
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/controller/design/layout.php">
+		<operation error="log">
+			<search ><![CDATA[protected function getForm() {]]></search>
+			<add position="after"><![CDATA[
+				/* xml */
+					$data['text_column_loginpage'] = $this->language->get('text_column_loginpage');
+					$data['text_column_checkoutpage'] = $this->language->get('text_column_checkoutpage');	
+				/* xml */	
+			]]></add>
+		</operation>
+	</file>
+	
+	
+	
+	
+	
+</modification>

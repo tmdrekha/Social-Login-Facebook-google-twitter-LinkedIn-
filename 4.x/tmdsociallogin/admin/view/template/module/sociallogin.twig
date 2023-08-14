@@ -1,0 +1,319 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  {{ getkeyform }}
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          
+			<ul class="nav nav-tabs">
+			<li class="nav-item"><a href="#tab-setting" data-bs-toggle="tab" class="nav-link active ">{{ tab_setting }}<i class="fa fa-cog fa-fw"></i></a>
+			</li>
+		   <li class="nav-item"><a href="#tab-facebook" data-bs-toggle="tab" class="nav-link">{{ tab_facebook }}&nbsp;<i class="fab fa-facebook-f"></i></a></li>
+
+			<li class="nav-item"><a href="#tab-twitter" data-bs-toggle="tab" class="nav-link">{{ tab_twitter }}&nbsp;<i class="fab fa-twitter-square"></i></a></li>
+
+			<li class="nav-item"><a href="#tab-google" data-bs-toggle="tab" class="nav-link">{{ tab_google }}&nbsp;<i class="fab fa-google"></i></a></li>
+
+			<li class="nav-item"><a href="#tab-linkedin" data-bs-toggle="tab" class="nav-link">{{ tab_linkedin }}&nbsp;<i class="fab fa-linkedin"></i></a></li>
+			</ul>
+
+          <div class="tab-content">
+            <!-- Setting -->
+            <div class="tab-pane active" id="tab-setting">
+              <div class="row mb-3 required">
+				<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+				<div class="col-sm-10">
+				<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>	
+				<div id="error-name" class="invalid-feedback"></div>
+				</div>
+			</div>
+
+              <div class="row mb-3">
+                <label for="input-iconsize" class="col-sm-2 col-form-label">{{ entry_iconsize}}</label>
+				<div class="col-sm-10">
+				<div class="row">
+			     <div class="col-sm-6">
+				  <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control">
+					</div>
+					<div class=" col-sm-6">
+						<input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control">
+					</div>
+				</div>
+				</div>
+			  </div>
+			
+			<div class="row mb-3">
+						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="status" id="input-status" class="form-select">
+								<option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+            </div>
+
+            <!-- facebook -->
+
+            <div id="tab-facebook" class="tab-pane">
+            	 <div class="row mb-3">
+						<label for="input-fbtitle" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="fbtitle" value="{{ fbtitle }}" placeholder="{{ entry_title }}" id="input-fbtitle" class="form-control"/>							
+						</div>
+					</div>
+
+
+				<div class="row mb-3">
+						<label for="input-fbimage" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+						<div class="col-sm-10">
+							<div class="card image">
+								<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="fbimage" value="{{ fbimage }}" id="input-fbimage"/>
+								<div class="card-body">
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-fbimage" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-fbimage" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+
+
+            	    <div class="row mb-3">
+						<label for="input-fbapikey" class="col-sm-2 col-form-label">{{ entry_apikey }}</label>
+						<div class="col-sm-6">
+							<input type="text" name="fbapikey" value="{{ fbapikey }}" placeholder="{{ entry_apikey }}" id="input-fbapikey" class="form-control"/>	 					
+						</div>
+						 <div class="col-sm-4">
+							{{ text_fblink }}
+		               </div>
+					</div>
+
+					 <div class="row mb-3">
+						<label for="input-fbapisecret" class="col-sm-2 col-form-label">{{ entry_apisecret }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="fbapisecret" value="{{ fbapisecret }}" placeholder="{{ entry_apisecret }}" id="input-fbapisecret" class="form-control"/>							
+						</div>
+					</div>
+					
+			     <div class="row mb-3">
+						<label for="input-fbstatus" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="fbstatus" id="input-fbstatus" class="form-select">
+								<option value="1"{% if fbstatus %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not fbstatus %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row mb-3">
+						<label for="input-fbcallback" class="col-sm-2 col-form-label">{{ entry_callback }}</label>
+						<div class="col-sm-10">
+							<b>{{ fbcallback }}</b>							
+						</div>
+					</div>
+
+            </div>
+
+           <!-- twitter -->
+
+            <div id="tab-twitter" class="tab-pane">
+                 	 <div class="row mb-3">
+						<label for="input-twittertitle" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="twittertitle" value="{{ twittertitle }}" placeholder="{{ entry_title }}" id="input-twittertitle" class="form-control"/>							
+						</div>
+					</div>         
+
+                <div class="row mb-3">
+						<label for="input-twitimage" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+						<div class="col-sm-10">
+							<div class="card image">
+								<img src="{{ twitthumb }}" alt="" title="" id="thumb-twitimage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="twitimage" value="{{ twitimage }}" id="input-twitimage"/>
+								<div class="card-body">
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-twitimage" data-oc-thumb="#thumb-twitimage" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-twitimage" data-oc-thumb="#thumb-twitimage" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+				    
+            	    <div class="row mb-3">
+						<label for="input-twitapikey" class="col-sm-2 col-form-label">{{ entry_twapikey }}</label>
+						<div class="col-sm-6">
+							<input type="text" name="twitapikey" value="{{ twitapikey }}" placeholder="{{ entry_twapikey }}" id="input-twitapikey" class="form-control"/>							
+						</div>
+						 <div class="col-sm-4">
+					{{ text_twitlink }}
+		               </div>
+					</div>
+
+					 <div class="row mb-3">
+						<label for="input-twitapisecret" class="col-sm-2 col-form-label">{{ entry_twapisecret }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="twitapisecret" value="{{ twitapisecret }}" placeholder="{{ entry_twapisecret }}" id="input-twitapisecret" class="form-control"/>
+						</div>
+					</div>
+
+			     <div class="row mb-3">
+						<label for="input-twitstatus" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="twitstatus" id="input-twitstatus" class="form-select">
+								<option value="1"{% if twitstatus %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not twitstatus %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row mb-3">
+						<label for="input-twitcallback" class="col-sm-2 col-form-label">{{ entry_callback }}</label>
+						<div class="col-sm-10">
+							<b>{{ twitcallback }}</b>	
+						</div>
+					</div>
+
+            </div>
+
+            <!--google  -->
+
+             <div id="tab-google" class="tab-pane">
+                 	 <div class="row mb-3">
+						<label for="input-googletitle" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="googletitle" value="{{ googletitle }}" placeholder="{{ entry_title }}" id="input-googletitle" class="form-control"/>							
+						</div>
+					</div>        
+
+                <div class="row mb-3">
+						<label for="input-googleimage" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+						<div class="col-sm-10">
+							<div class="card image">
+								<img src="{{ googlethumb }}" alt="" title="" id="thumb-googleimage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="googleimage" value="{{ googleimage }}" id="input-googleimage"/>
+								<div class="card-body">
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-googleimage" data-oc-thumb="#thumb-googleimage" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-googleimage" data-oc-thumb="#thumb-googleimage" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+				    
+            	    <div class="row mb-3">
+						<label for="input-googleapikey" class="col-sm-2 col-form-label">{{ entry_goapikey }}</label>
+						<div class="col-sm-6">
+							<input type="text" name="googleapikey" value="{{ googleapikey }}" placeholder="{{ entry_goapikey }}" id="input-googleapikey" class="form-control"/>							
+						</div>
+						 <div class="col-sm-4">
+					{{ text_gogllink }}
+		               </div>
+					</div>
+
+				 <div class="row mb-3">
+					<label for="input-googleapisecret" class="col-sm-2 col-form-label">{{ entry_goapisecret }}</label>
+					<div class="col-sm-10">
+						<input type="text" name="googleapisecret" value="{{ googleapisecret }}" placeholder="{{ entry_goapisecret }}" id="input-googleapisecret" class="form-control"/>							
+					</div>
+				</div>
+				
+			     <div class="row mb-3">
+						<label for="input-googlestatus" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="googlestatus" id="input-googlestatus" class="form-select">
+								<option value="1"{% if googlestatus %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not googlestatus %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+				<div class="row mb-3">
+					<label for="input-googlecallback" class="col-sm-2 col-form-label">{{ entry_callback }}</label>
+					<div class="col-sm-10">
+						<b>{{ googlecallback }}</b>							
+					</div>
+				</div>
+			</div>
+
+             <!--Linkedin  -->
+
+             <div id="tab-linkedin" class="tab-pane">
+                 	 <div class="row mb-3">
+						<label for="input-linkedintitle" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="linkedintitle" value="{{ linkedintitle }}" placeholder="{{ entry_title }}" id="input-linkedintitle" class="form-control"/>
+						</div>
+					</div>        
+
+                  <div class="row mb-3">
+						<label for="input-linkedinimage" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+						   <div class="col-sm-10">
+							<div class="card image">
+								<img src="{{ linkedinthumb }}" alt="" title="" id="thumb-linkedinimage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="linkedinimage" value="{{ linkedinimage }}" id="input-linkedinimage"/>
+							<div class="card-body">
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-linkedinimage" data-oc-thumb="#thumb-linkedinimage" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-linkedinimage" data-oc-thumb="#thumb-linkedinimage" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+				    
+                  
+            	    <div class="row mb-3">
+						<label for="input-linkedinapikey" class="col-sm-2 col-form-label">{{ entry_liapikey }}</label>
+						<div class="col-sm-6">
+							<input type="text" name="linkedinapikey" value="{{ linkedinapikey }}" placeholder="{{ entry_liapikey }}" id="input-linkedinapikey" class="form-control"/>							
+						</div>
+						 <div class="col-sm-4">
+					{{ text_linkdinlink }}
+		               </div>
+					</div>
+
+				 <div class="row mb-3">
+					<label for="input-linkdinsecretapi" class="col-sm-2 col-form-label">{{ entry_liapisecret }}</label>
+					<div class="col-sm-10">
+						<input type="text" name="linkedinapisecret" value="{{ linkedinapisecret }}" placeholder="{{ entry_liapisecret }}" id="input-linkdinsecretapi" class="form-control"/>							
+					</div>
+				</div>
+				
+			     <div class="row mb-3">
+						<label for="input-linkstatus" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="linkstatus" id="input-linkstatus" class="form-select">
+								<option value="1"{% if linkstatus %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not linkstatus %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
+				<div class="row mb-3">
+					<label for="input-linkedincallback" class="col-sm-2 col-form-label">{{ entry_callback }}</label>
+					<div class="col-sm-10">
+							<b>{{ linkedincallback }}</b>					
+					</div>
+				</div>
+            </div>
+             </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
+<style>
+.col-sm-4 {
+    font-size: 18px;
+}
+</style>
+
