@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-sm-12">
+		{% if warning %}
+		<div class="alert alert-warning"><i class="fa fa-check-circle"></i> {{ warning }}</div>
+		{% endif %}
+	  
+		<div id="tmd_social_contents">
+			<ul class="list-inline tmd_socialicons">
+				{% if fbstatus %}
+				<li>
+					<a class="socalicon" href="{{ fblink }}">
+						<img  class="img-responsive" src="{{ fbimage }}" data-toggle="tooltip" title="{{ fbtitle }}" alt="{{ fbtitle }}" title="{{ fbtitle }}">
+					</a>
+				</li>
+				{% endif %}
+				{% if twitstatus %}
+				<li>
+					<a class="socalicon" href="{{ twitlink }}">
+						<img  class="img-responsive" src="{{ twitimage }}" data-toggle="tooltip" title="{{ twittertitle }}" alt="{{ twittertitle }}" alt="{{ twittertitle }}" title="{{ twittertitle }}">
+					</a>
+				</li>
+				{% endif %}
+				{% if goglestatus %}
+				<li>
+					<a class="socalicon" href="{{ goglelink }}">
+						<img  class="img-responsive" src="{{ gogleimage }}" data-toggle="tooltip" title="{{ googletitle }}" alt="{{ googletitle }}" alt="{{ googletitle }}" title="{{ googletitle }}">
+					</a>
+				</li>
+				{% endif %}
+				{% if linkstatus %}
+				<li>
+					<a class="socalicon" href="{{ linkdinlink }}">
+						<img  class="img-responsive" src="{{ linkdinimage }}" data-toggle="tooltip" title="{{ linkedintitle }}" alt="{{ linkedintitle }}" alt="{{ linkedintitle }}" title="{{ linkedintitle }}">
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- css code start here -->
+<link href="catalog/view/theme/default/stylesheet/tmdsocial.css" type="text/css" rel="stylesheet" media="screen" />
+<!-- css code end here -->

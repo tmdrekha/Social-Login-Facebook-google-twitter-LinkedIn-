@@ -1,0 +1,25 @@
+#tmd_social_contents { 
+	margin: 15px 0 0;
+}
+#tmd_social_contents .tmd_socialicons{
+	float: right;
+	margin:0;
+}
+
+/* == J3 css start == */
+.site-wrapper #tmd_social_contents .tmd_socialicons {
+    float: none;
+    text-align: center;
+}
+
+@media(max-width: 767px){
+	#column-login {
+		clear: both;
+	}
+	#tmd_social_contents {
+		text-align: center;
+	}
+	#tmd_social_contents .tmd_socialicons {
+		float: none;
+	}
+}
