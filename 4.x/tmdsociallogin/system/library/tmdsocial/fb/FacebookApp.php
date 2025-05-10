@@ -22,12 +22,24 @@
  *
  */
 namespace Facebook;
-
 use Facebook\Authentication\AccessToken;
 use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookApp implements \Serializable
+class FacebookApp
 {
+	 public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'secret' => $this->secret,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'];
+        $this->secret = $data['secret'];
+    }
     /**
      * @var string The app ID.
      */

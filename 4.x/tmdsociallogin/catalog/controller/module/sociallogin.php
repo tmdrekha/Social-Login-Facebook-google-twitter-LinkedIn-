@@ -249,9 +249,17 @@ class Sociallogin extends \Opencart\System\Engine\Controller {
 		
      	$option = [];
 		setcookie($this->config->get('session_name'), session_id(), $option);
-		
-		$twitapikey = $setting['twitapikey'];
-		$twitapisecret = $setting['twitapisecret'];
+		if(!empty($setting['twitapikey'])){
+			$twitapikey = $setting['twitapikey'];
+		}else{
+			$twitapikey = '';
+		}
+		if(!empty($setting['twitapisecret'])){
+			$twitapisecret = $setting['twitapisecret'];
+        }else{
+			$twitapisecret = '';
+
+        }
 	
 		//Fresh authentication
 		$connection = new TwitterOAuth($twitapikey, $twitapisecret);
